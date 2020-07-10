@@ -13,6 +13,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'HomeController@index')->name('home');
+
+
+Auth::routes();
+
+// Patient profile data
+Route::group([
+    'prefix' => 'profile',
+    'middleware' => ['auth','role:patient'],
+], function () {
+    Route::get('/edit', 'Auth\ProfileController@edit');
+    Route::Post('/update', 'Auth\ProfileController@update')->name('update-profile');
 });
+
+/** apointments page routes */
+Route::group([
+    'prefix' => 'appointments',
+    'middleware' => ['patient','auth:admin,web']
+], function () {
+    Route::resource('', 'AppointmentController')->only([
+    'store', 'edit', 'update', 'index'
+    ])->middleware(['patient','auth:admin,web']);
+    // accept or reject appointments
+    Route::Put('/{appointment}/change', 'AppointmentController@change');
+});
+
+
+
+// Route::get('/home', 'HomeController@index')->name('home');
