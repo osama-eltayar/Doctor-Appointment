@@ -1,5 +1,6 @@
 <?php
 
+use App\Model\Appointment;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,12 +33,16 @@ Route::group([
     'prefix' => 'appointments',
     'middleware' => ['patient','auth:admin,web']
 ], function () {
-    Route::resource('', 'AppointmentController')->only([
-    'store', 'edit', 'update', 'index'
-    ])->middleware(['patient','auth:admin,web']);
+    Route::resource('/', 'AppointmentController')->only([
+   'store','update','index'
+    ]);
     // accept or reject appointments
     Route::Put('/{appointment}/change', 'AppointmentController@change');
 });
+// update appointments only for admin
+Route::get('appointments/{appointment}/edit', 'AppointmentController@edit')->middleware('auth:admin');
+Route::Put('appointments/{appointment}', 'AppointmentController@update')->middleware('auth:admin');
+
 
 
 

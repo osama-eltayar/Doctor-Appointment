@@ -32,7 +32,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($confirmedAppointments as $appointment)
+            @forelse($confirmedAppointments as $appointment)
                 <tr>
 
                     @unlessrole('patient')
@@ -43,7 +43,11 @@
                     @endunlessrole
                     <th scope="row">{{ $appointment->date }}</th>
                 </tr>
-            @endforeach
+            @empty
+                <div class="alert alert-primary" role="alert">
+                    sorry there is no confirmed appointment
+                </div>
+            @endforelse
         </tbody>
     </table>
     <h1>Penned Appointmeents</h1>
@@ -61,7 +65,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($pendingAppointments as $appointment)
+            @forelse($pendingAppointments as $appointment)
                 <tr>
                     @unlessrole('patient')
                         <th scope="row">{{ $appointment->patient->type->name }}</th>
@@ -99,7 +103,11 @@
                         </td>
                     @endunlessrole
                 </tr>
-            @endforeach
+            @empty
+                <div class="alert alert-primary" role="alert">
+                    sorry there is no penned appointment
+                </div>            
+            @endforelse
         </tbody>
 
     </table>
