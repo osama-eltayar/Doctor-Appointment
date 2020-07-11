@@ -35,7 +35,7 @@
 <hr>
 <p> application by default use sync queue if you want use database queue to send notification in back-ground follow this  </p>
 <ol>
-  <li>change QUEUE_CONNECTION=sync to QUEUE_CONNECTION=database </li> 
+  <li>change QUEUE_CONNECTION=sync to QUEUE_CONNECTION=database in .env file  </li> 
   <li>php artisan queue:work</li>  
 </ol>
 

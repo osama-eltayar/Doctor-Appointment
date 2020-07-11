@@ -50,6 +50,7 @@ class AppointmentController extends Controller
 
     public function change(Appointment $appointment, Request $request)
     {
+        $this->authorize('update', $appointment);
         $user = Auth::user();
         $column = $user->hasRole('doctor')?'is_doctor_accept':'is_patient_accept';
         $appointment->update([
